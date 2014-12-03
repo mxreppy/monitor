@@ -1,0 +1,65 @@
+<!doctype html>
+
+<html>
+	<head>
+	    <meta charset="utf-8"/>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+		<title>Monitor</title>
+		
+		<link rel="icon" type="image/ico" href="images/monitor.ico"/>
+
+		<link rel="stylesheet" href="webjars/bootstrap/3.3.1/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="webjars/bootstrap/3.3.1/css/bootstrap-theme.min.css"/>
+
+		<script src="webjars/jquery/2.1.1/jquery.min.js"></script>
+		<script src="webjars/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+
+<div class="container">
+<h3>Monitor</h3>
+<hr/>
+
+<h4>Current Status</h4>
+
+<table class="table table-striped table-bordered table-hover table-condensed">
+	<tr>
+	<th>Site</th>
+	<th>Status</th>
+	</tr>
+	
+	<tr th:each="site : ${sites}">
+	<td th:text="${site.name}">Alpha</td>
+	<td th:text="${site.status}">Good</td>
+	</tr>
+</table>
+
+<form action="check" method="post">
+	<input type="submit" class="btn btn-success" value="check now" />
+</form>
+
+<hr/>
+
+<h4>Add New Site</h4>
+
+<form action="add" method="post">
+	
+	<div class="form-group">
+	<label for="name">Site Name</label><br/>
+	<input type="text" class="form-control" id="name" name="name"/>
+	</div>
+	
+	<div class="form-group">
+	<label for="url">URL</label><br/>
+	<input type="text" class="form-control" id="url" name="url"/>
+	</div>
+	
+	<input type="submit" class="btn btn-primary" value="add" />
+</form>
+
+</div>
+
+</body>
+</html>
