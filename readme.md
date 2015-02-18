@@ -3,23 +3,23 @@ We will build a website monitoring project, using Spring Boot and Spring Framewo
 
 ## Setup
 1. Eclipse (or your favorite IDE)
-2. Gradle 2.2
+2. Gradle 2.3
 	
 ## Create the starter project
 
-0. Browse to the Spring initializer: http://start.Spring.io
+0. Browse to the Spring initializer: http://start.spring.io
 
 0. Fill the form with these options:
-	* Group: org.dfw2gug
+	* Group: org.javamug
 	* Artifact: monitor
 	* Name: monitor
 	* Description> Monitor application
-	* Package Name: org.dfw2gug.monitor
+	* Package Name: org.javamug.monitor
 	* Type: Gradle Project
 	* Packaging: War
 	* Java Version: 1.7
 	* Language: Groovy
-	* Spring Boot Version: 1.1.9
+	* Spring Boot Version: 1.2.1
 
 0. Check the following project dependencies:
 	* Thymeleaf
@@ -28,18 +28,17 @@ We will build a website monitoring project, using Spring Boot and Spring Framewo
 	* Actuator
 
 0. Click Generate Project to download the monitor.zip starter file.
-0. Create a project folder. I'm using c:\projects2\monitor.
+0. Create a project folder. I'm using c:\projects3\monitor.
 0. Open the monitor.zip file, and save it in your folder.
 
 ## Use the latest gradle version
 
-The gradle version is set to 1.12. Lets update it to use gradle 2.2.
+The gradle version is set to 1.12. Lets update it to use gradle 2.3.
 
 0. Edit the build.groovy file
 1. Near the bottom of the file, change the line
-	* gradleVersion = '1.12'
-	* to
-	* gradleVersion = '2.2'
+	* from gradleVersion = '1.12'
+	* to gradleVersion = '2.3'
 
 ## Do an initial build
 
@@ -74,23 +73,27 @@ Next, we will use gradle to create the Eclipse files needed to import this proje
 
 Now, start Eclipse (or SSTS), and import your project. Let's examine the files that the Spring Initializr created.
 
-### `src/main/groovy/dfw2gug/monitor/Application.groovy`
+### `src/main/groovy/org.javamug/monitor/MonitorApplication.groovy`
 
-This is the "Main" class for our application. There are several annotations attached to the class.
+This is the "Main" class for our application. There is one annotation attached to the class.
 
-#### @Configuration
+#### @SpringBootApplication
+
+This is a shortcut for the following annotations
+
+##### @Configuration
 
 This tells Spring that this is a Java Configuration class. 
 
-#### @ComponentScan
+##### @ComponentScan
 
 This tells Spring that when looking for beans, start at this package, and scan it and subpackages for beans.
 
-#### @EnableAutoConfiguration
+##### @EnableAutoConfiguration
 
 This is where the magic happens. Spring-Boot determines its configuration from many sources, including the jars on the classpath. Spring will automatically configure the application to use the available jars.
 
-### `src/main/groovy/dfw2gug/monitor/ServletInitializer.groovy`
+### `src/main/groovy/org.javamug/monitor/ServletInitializer.groovy`
 
 Since we selected WAR files as our packaging, this file is created.
  
@@ -108,11 +111,11 @@ Next, we browse to the applications home page http://localhost:8080, and we see 
 build a controller and an index.html page.
 
 
-## Create `src/main/groovy/dfw2gug/monitor/SiteController.groovy`
+## Create `src/main/groovy/org.javamug/monitor/SiteController.groovy`
 
 create the SiteController.groovy file, and set its contents to this:
 
-	package org.dfw2gug.monitor
+	package org.javamug.monitor
 
 	import org.Springframework.stereotype.Controller
 	import org.Springframework.web.bind.annotation.RequestMapping
@@ -167,11 +170,11 @@ We are now ready to build our domain. We are using JPA entity objects (and Sprin
 2. the address of the site
 3. the status of the site (OK or ERROR)
 
-### Create: `src/main/groovy/org/dfw2gug/monitor/Site.groovy`
+### Create: `src/main/groovy/org/javamug/monitor/Site.groovy`
 
 create the Site.groovy file, with the following contents:
 
-	package org.dfw2gug.monitor
+	package org.javamug.monitor
 
 	import javax.persistence.*
 
@@ -194,9 +197,9 @@ create the Site.groovy file, with the following contents:
 
 This file defines our domain object and database schema. Next, we will create a repository to interface between our program and the database.
 
-### Create: `src/main/groovy/org/dfw2gug/monitor/SiteRepository.groovy`
+### Create: `src/main/groovy/org/javamug/monitor/SiteRepository.groovy`
 
-	package org.dfw2gug.monitor
+	package org.javamug.monitor
 
 	import org.springframework.data.repository.CrudRepository
 
@@ -216,53 +219,52 @@ change the index.html contents to this:
 
 	<!doctype html>
 	<html>
-	<head>
-	<title>Monitor</title>
-	</head>
-	<body>
-
-	<h2>Monitor</h2>
-	<hr/>
-
-	<h3>Current Status</h3>
-
-	<table>
-	<tr>
-	<th>Site</th>
-	<th>Status</th>
-	</tr>
-
-	<tr>
-	<td>Alpha</td>
-	<td>Good</td>
-	</tr>
-
-	<tr>
-	<td>Beta</td>
-	<td>Error</td>
-	</tr>
-
-	</table>
-
-	<hr/>
-
-	<h3>Add New Site</h3>
-
-	<form action="add" method="post">
-		<div style="margin-bottom: 1em;">
-		<label for="name">Site Name</label><br/>
-		<input id="name" name="name"/>
-		</div>
-		
-		<div style="margin-bottom: 1em;">
-		<label for="url">URL</label><br/>
-		<input id="url" name="url"/>
-		</div>
-		
-		<input type="submit" value="add" />
-	</form>
-
-	</body>
+    	<head>
+    	    <title>Monitor</title>
+    	</head>
+    	<body>
+    
+        	<h2>Monitor</h2>
+        	<hr/>
+        
+        	<h3>Current Status</h3>
+        
+        	<table>
+            	<tr>
+            	    <th>Site</th>
+            	    <th>Status</th>
+            	</tr>
+            
+            	<tr>
+                	<td>Alpha</td>
+                	<td>Good</td>
+            	</tr>
+            
+            	<tr>
+                	<td>Beta</td>
+                	<td>Error</td>
+            	</tr>
+        
+        	</table>
+        
+        	<hr/>
+        
+        	<h3>Add New Site</h3>
+        
+        	<form action="add" method="post">
+        		<div style="margin-bottom: 1em;">
+            		<label for="name">Site Name</label><br/>
+            		<input id="name" name="name"/>
+        		</div>
+        		
+        		<div style="margin-bottom: 1em;">
+            		<label for="url">URL</label><br/>
+            		<input id="url" name="url"/>
+        		</div>
+        		
+        		<input type="submit" value="add" />
+        	</form>
+    	</body>
 	</html>
 
 The data in this form is hard wired. Lets add some default data to the database, then change this form to access the data from the database.
@@ -271,14 +273,14 @@ The data in this form is hard wired. Lets add some default data to the database,
 
 We need to create test data, gather the Site objects in the controller, and pass them to the view.
 
-### Edit `src/main/groovy/dfw2gug/monitor/Application.groovy`
+### Edit `src/main/groovy/org/javamug/monitor/MonitorApplication.groovy`
 
 We will use @PostConstruct to create a method that runs just after Spring configures the beans. We will create three Sites to monitor.
 
-1. Add the following to Application.groovy
+Add the following to Application.groovy
 
-	@Autowired
-	SiteRepository siteRepository
+    @Autowired
+    SiteRepository siteRepository
 
 	@PostConstruct
 	void init() {
@@ -287,17 +289,17 @@ We will use @PostConstruct to create a method that runs just after Spring config
 		siteRepository.save new Site(name:"Bad", url:"www.hopethisdoesntexist.com", status:"n/a")
 	}
 
-### Edit `src/main/groovy/dfw2gug/monitor/SiteController.groovy`
+### Edit `src/main/groovy/org/javamug/monitor/SiteController.groovy`
 
 We need to update the controller to grab the sites and pass them to the view. We get the list of objects from the siteRepository, then pass them to the view using the model.
 
-1. Add the following to SiteController.groovy
+Add the following to SiteController.groovy
 
 	@Autowired
 	SiteRepository siteRepository
 
 	@RequestMapping("")
-	String index(Model model) {
+	String index(final Model model) {
 		def sites = siteRepository.findAll()
 		model.addAttribute "sites", sites
 		"index"
@@ -322,10 +324,17 @@ Restart the app, and refresh the browser. You will now see the sites that were s
 
 ## Implement Add New Site
 
-### Edit `src/main/groovy/dfw2gug/monitor/SiteController.groovy`
+### Edit `src/main/groovy/org/javamug/monitor/SiteController.groovy`
 
-1. Add the annotation @Slf4j to the class.
-2. Add this method:
+Add the annotation @Slf4j to the class.
+
+    @Slf4j
+    @Controller
+    @RequestMapping("/")
+    class SiteController {
+    	
+Add this method:
+
 	@RequestMapping(value="/add", method=RequestMethod.POST)
 	String add(@RequestParam String name, @RequestParam String url) {
 		log.info "add: name=$name, url=$url"
@@ -340,24 +349,25 @@ A few notes about SpringBoot's logging.
 * Logback is configured to support java util logging, commons, log4j and slf4j.
 * it creates 10MB rotating output files.
 
-To change the log filename & folder:
-1. Modify application.properties:  
-	* logging.file=c://data//monitor.log
-2. Windows users must use // folder separators
+To change the log filename & folder edit application.properties:  
+	
+	logging.file=c://data//monitor.log
 
-Log level is INFO by default. To change it:
-1. Modify application.properties, and add/change the following line(s)
-	* logging.level.&lt;package&gt; = DEBUG
+Note: Windows users must use // folder separators.
+
+Log level is INFO by default. To change it, edit application.properties
+
+	logging.level.&lt;package&gt; = DEBUG
 
 ## Add a Service to Access the Site
 
 Normally, we don't access the repositories directly from the controller. We use a service in the middle. This allows us to easly manage transactions. Next, we will create the service.
 
-### Create `src/main/groovy/dfw2gug/monitor/SiteService.groovy`
+### Create `src/main/groovy/org/javamug/monitor/SiteService.groovy`
 
 Create the SiteService.groovy file, and set its contents to this:
 
-	package org.dfw2gug.monitor
+	package org.javamug.monitor
 
 	import org.Springframework.beans.factory.annotation.Autowired
 	import org.Springframework.stereotype.Service
@@ -376,17 +386,23 @@ Create the SiteService.groovy file, and set its contents to this:
 		Site create(String name, String url) {
 			siteRepository.save new Site(name:name, url:url)
 		}
+		
+    	void update(Site site) {
+    		siteRepository.save site
+    	}
+	
 	}
 
-### Edit `src/main/groovy/dfw2gug/monitor/SiteController.groovy`
+### Edit `src/main/groovy/org/javamug/monitor/SiteController.groovy`
 
 Update site controller to use the SiteService instead of the SiteRepository
 
-1. Delete the 2 lines
-	* Autowired 
-	* SiteRepository siteRepository
+Delete the 2 lines
 
-2. Add the following autowired bean, and change the index and add methods:
+	@Autowired 
+	SiteRepository siteRepository
+
+Add the following autowired bean, and change the index and add methods:
 
 	@Autowired
 	SiteService siteService
@@ -398,7 +414,7 @@ Update site controller to use the SiteService instead of the SiteRepository
 		"index"
 	}
 
-	@RequestMapping(value="/add", method=RequestMethod.POST)
+	@RequestMapping(value="add", method=RequestMethod.POST)
 	String add(@RequestParam String name, @RequestParam String url) {
 		log.info "add: name=$name, url=$url"
 		siteService.create name, url
@@ -419,28 +435,28 @@ Below the table, add the following form:
 		<input type="submit" value="check" />
 	</form>
 
-### Edit `src/main/groovy/dfw2gug/monitor/SiteController.groovy`
+### Edit `src/main/groovy/org/javamug/monitor/SiteController.groovy`
 
 Add a method to the controller to handle the check function, and delegate to the monitor service's check method()
 
-1. add the monitorService bean
+Add the monitorService bean.
 
 		@Autowired
 		MonitorService monitorService
 
-2. add the check method
+Add the check method.
 
-		@RequestMapping(value="/check", method=RequestMethod.POST)
+		@RequestMapping(value="check", method=RequestMethod.POST)
 		String check() {
 			monitorService.check()
 			"redirect:/"
 		}
 
-### Create `src/main/groovy/dfw2gug/monitor/MonitorService.groovy`
+### Create `src/main/groovy/org/javamug/monitor/MonitorService.groovy`
 
 The monitor service will check the availability of the sites. Create MonitorService.groovy, and set its contents to this:
 
-	package org.dfw2gug.monitor
+	package org.javamug.monitor
 
 	import groovy.util.logging.Slf4j
 	import org.Springframework.beans.factory.annotation.Autowired
@@ -485,14 +501,15 @@ Notice, in the MonitorService, the connectionTimeout and readTimeout values are 
 ### Edit `src/main/resources/application.properties`
 
 Edit the application properties, and add the following two lines:
-* timeout.connect=5000
-* timeout.read=5000
 
-### Create `src/main/groovy/dfw2gug/monitor/Timeout.groovy`
+    timeout.connect=5000
+    timeout.read=5000
+
+### Create `src/main/groovy/org/javamug/monitor/Timeout.groovy`
 
 We create a Timeout.groovy bean to hold the timeout values. Use @ConfigurationProperties to read the values from the spring environment and store them in the bean.
 
-	package org.dfw2gug.monitor
+	package org.javamug.monitor
 
 	import org.Springframework.boot.context.properties.ConfigurationProperties
 	import org.Springframework.stereotype.Component
@@ -504,7 +521,7 @@ We create a Timeout.groovy bean to hold the timeout values. Use @ConfigurationPr
 		int read
 	}
 
-### Modify `src/main/groovy/dfw2gug/monitor/MonitorService.groovy`
+### Modify `src/main/groovy/org/javamug/monitor/MonitorService.groovy`
 
 Now, change the MonitorService.groovy file to use the Timeout bean.
 
@@ -521,7 +538,7 @@ Change the getText line to use the bean
 
 The monitor should automatically check the sites for availability. We will use Spring's scheduling component to run the check method every minute.
 
-### Modify `src/main/groovy/dfw2gug/monitor/MonitorService.groovy`
+### Modify `src/main/groovy/org/javamug/monitor/MonitorService.groovy`
 
 Update the MonitorService.groovy to enable scheduling and call a method every minute.
 
@@ -539,19 +556,22 @@ Add the following method:
 
 We've been using the H2 embeded database. Let's change that to use a MySql database
 
-1. In mysql, create a monitor schema.
-2. In mysql, create user (name = monitor, password monitor).
-3. Modify application.properties, and add the following lines
-		Spring.datasource.driverClassName=com.mysql.jdbc.Driver
-		Spring.datasource.url=jdbc:mysql://localhost:3306/monitor
-		Spring.datasource.username=monitor
-		Spring.datasource.password=monitor
-		Spring.datasource.validation-query=select 1
-		Spring.datasource.test-on-borrow=true
-		Spring.jpa.hibernate.ddl-auto=create-drop
+In MySql
+* create a monitor schema.
+* create user with name = monitor, and password = monitor.
 
-4. Modify build.gradle
-* from: compile("com.h2database:h2")
+Modify application.properties, and add the following lines:
+
+	spring.datasource.driverClassName=com.mysql.jdbc.Driver
+	spring.datasource.url=jdbc:mysql://localhost:3306/monitor
+	spring.datasource.username=monitor
+	spring.datasource.password=monitor
+	spring.datasource.validation-query=select 1
+	spring.datasource.test-on-borrow=true
+	spring.jpa.hibernate.ddl-auto=create-drop
+
+Modify build.gradle
+* change: compile("com.h2database:h2")
 * to: compile("mysql:mysql-connector-java")
 
 ## Improve the UI
@@ -563,23 +583,22 @@ Let's add bootstrap ui to our application. We will use webjars, because of ease-
 Add the jquery and bootstrap jars to our project.
 
 1. In the dependencies block, add the following entries
-	* compile("org.webjars:jquery:2.1.1")
-	* compile("org.webjars:bootstrap:3.3.1")
+	* compile("org.webjars:jquery:2.1.3")
+	* compile("org.webjars:bootstrap:3.3.2-1")
 
 ### Edit `src/main/resources/templates/index.html`
 
 Update the index.html file to support bootstrap.
 
-1. In the <head> section, add the following:
+1. In the &lt;head&gt; section, add the following:
 
 		<meta charset="utf-8"/>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1"/>
-
-		<link rel="stylesheet" href="webjars/bootstrap/3.3.1/css/bootstrap.css"/>
-		<link rel="stylesheet" href="webjars/bootstrap/3.3.1/css/bootstrap-theme.css"/>
-		<script src="webjars/jquery/2.1.1/jquery.js"></script>
-		<script src="webjars/bootstrap/3.3.1/js/bootstrap.js"></script>
+		<link rel="stylesheet" href="webjars/bootstrap/3.3.2-1/css/bootstrap.css"/>
+		<link rel="stylesheet" href="webjars/bootstrap/3.3.2-1/css/bootstrap-theme.css"/>
+		<script src="webjars/jquery/2.1.3/jquery.js"></script>
+		<script src="webjars/bootstrap/3.3.2-1/js/bootstrap.js"></script>
 
 2. In the body section, wrap the contents with 
 
@@ -633,10 +652,8 @@ Here are the endpoints:
 
 ### Favicon
 
-While Spring-boot has builtin support for favicon.ico, no one knows how to use it :). So just name you icon something other than favicon.ico.
-
-1. In index.thml: <link rel="icon" type="image/ico" href="images/monitor.ico"/>
-2. Save your icon to src/main/resources/static/images/monitor.ico
+By default, a green leaf is used as your spring boot app's favorite icon. To change it, place
+your icon into the src/main/resource folder, and name it favicon.ico.
 
 ### Common properties
 Many components needs to have their property values set. This page shows the default values for the components
