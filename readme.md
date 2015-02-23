@@ -357,7 +357,7 @@ Note: Windows users must use // folder separators.
 
 Log level is INFO by default. To change it, edit application.properties
 
-	logging.level.&lt;package&gt; = DEBUG
+	logging.level.<package> = DEBUG
 
 ## Add a Service to Access the Site
 
